@@ -1,0 +1,124 @@
+.home {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+
+  .blue {
+    width: 40%;
+    height: 100%;
+    background-color: #52bdf1;
+    img {
+      margin-top: 30px;
+      position: relative;
+      height: auto;
+      width: 120%;
+      margin-left: 140px;
+    }
+  }
+
+  .white {
+    width: 60%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.login {
+  width: 25em;
+  height: 35em;
+  //min-height: 44em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  position: relative;
+  // z-index: 99;
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+    border-radius: 4px;
+    position: relative;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    padding: 17px 10px;
+    transition: transform 200ms ease-in-out;
+  }
+}
+
+.base-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .header {
+    font-size: 24px;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .navButtons {
+      margin-top: 5px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      margin: 20px;
+      margin-bottom: 0px;
+      justify-content: space-around;
+    }
+
+    .headLabel,
+    .loginLabel {
+      font-size: 20px;
+      color: #2b79ff;
+      margin-top: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .loginLabel {
+      font-size: 40;
+      border-bottom: 2px solid #2b79ff;
+      padding-bottom: 2px;
+    }
+    .image {
+      margin-top: 40px;
+      width: 21em;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .homeForm {
+      margin-top: 1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: fit-content;
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 1em;
+  }
+}
