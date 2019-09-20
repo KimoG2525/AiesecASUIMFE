@@ -3,6 +3,15 @@
     display: flex;
     flex-direction: column;
     height:100vh;
+
+    .footer {
+      margin-top: -30px;
+      margin-left: 430px;
+      //margin-bottom: 100px;
+      display: flex;
+      flex-direction: row;
+     // position: fixed;
+    }
     .blue{
         height: 25%;
         background-color: #52bdf1;
@@ -51,16 +60,16 @@
         height:75%;
         background-color: white;
         .login {
-           width:100%;
-            height: 29em;
+           width:75%;
+            height: 26em;
             //min-width: 200em;
            // display: flex;
             margin-top: 140px;
-        
+            margin-left: 100px; 
             position: relative;
             // z-index: 99;
             .container {
-              margin-left: 170px;  
+              margin-left: 200px;  
               display: flex;
             //   justify-content: center;
             //   align-items: center;
@@ -73,6 +82,7 @@
               height: 100%;
               padding: 17px 10px;
               transition: transform 200ms ease-in-out;
+              overflow-y:auto
             }
           }
           .base-container {
@@ -80,6 +90,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+           
            // align-items: center;
         
           
@@ -91,7 +102,7 @@
               .formLabel {
                 color: #2b79ff;
                 margin-top: 5px;
-                margin-right: 600px;
+                margin-right: 450px;
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 40;
                 border-bottom: 2px solid #2b79ff;
@@ -112,11 +123,11 @@
                 display: flex;
                 flex-direction: column;
                 //align-items: center;
-          .names{
+          .row-data{
             display: flex;
             flex-direction: row;
           }
-          .personal-data{
+          .date-phone{
             display: flex;
             flex-direction: row;
             margin-top: 15px;
@@ -135,9 +146,7 @@
               }
             }
           
-            .footer {
-              margin-top: 1em;
-            }
+          
           }
           
     }

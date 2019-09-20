@@ -19,19 +19,48 @@ export const logout = () => {
 			});
 	};
 };
-export const save = userData => {
+export const save = (userData,token) => {
+	console.log(token)
 	return dispatch => {
-		axios
-			.post(
-				'https://aiesec-asu-im-api.herokuapp.com/api/Account/Register',
-				userData
-			)
-			.then(response => {
-				dispatch(dataSaved());
+		let email ='';
+	axios.get('https://aiesec-asu-im-api.herokuapp.com/api/Account')
+	.then( response => {
+			//email=response.data.email
+			console.log(response)
+	})
+	.catch(err => {
+		console.log("Getting Data Error")
+	})
+
+	const user = {
+		email:email ,
+		firstName:userData.firstName,
+		lastName:userData.lastName,
+		nickName:userData.nickName,
+		mobileNumber:userData.mobileNumber,
+		birthDate:userData.birthDate
+	}
+	axios.put('https://aiesec-asu-im-api.herokuapp.com/api/Account/Update' , user)
+	.then( response => {
+			console.log('updated successfully')
+			axios.put('https://aiesec-asu-im-api.herokuapp.com/api/Account/ChangePassword' , 
+			{
+				oldPassword:userData.oldPassword,
+				newPassword:userData.newPassword
+			}).then( response =>
+				{
+					console.log('Password updated successfully')
+				}
+			).catch(err => {
+				console.log(err)
 			})
-			.catch(err => {
-				dispatch(dataSavedFailed(err));
-			});
+	})
+	.catch(err => {
+		console.log(err)
+	})
+
+
+
 	};
 };
 const dataSaved = () => {

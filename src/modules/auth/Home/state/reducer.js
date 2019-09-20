@@ -9,6 +9,7 @@ const userSession = {
 };
 
 const loginReducer = (state = userSession, action) => {
+	console.log(action.data)
 	switch (action.type) {
 		case LOGIN_PENDING:
 			return {
