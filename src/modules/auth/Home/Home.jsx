@@ -22,10 +22,14 @@ const Home = props => {
 	const popUpRef = useRef();
 
 	const onSubmit = () => {
-		if (validatePassword(user.password) && validateEmail(user.email)) {
+		if (validatePassword(user.password) || validateEmail(user.email)) {
 			setError({ ...error, email: false, password: false });
 			props.login(user);
-			setUser({});
+			setUser({
+				email: '',
+				password: '',
+				rememberMe: false
+			});
 			return;
 		} else {
 			popUpRef.current.handleClickOpen();
@@ -72,6 +76,7 @@ const Home = props => {
 											autoComplete='email'
 											margin='normal'
 											variant='outlined'
+											value={user.email}
 										/>
 									</div>
 									<div className='form-group'>
@@ -85,12 +90,14 @@ const Home = props => {
 											type='password'
 											margin='normal'
 											variant='outlined'
+											value={user.password}
 										/>
 									</div>
 									<div className='form-group'>
 										<CheckBox
 											checked={user.rememberMe}
 											handleChecked={handleChecked}
+											
 										/>
 									</div>
 								</div>
@@ -122,7 +129,8 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
 	return {
-		loginFailed: state.login.loginFailed
+		loginFailed: state.login.loginFailed,
+		token: state.login.token
 	};
 };
 export default connect(
