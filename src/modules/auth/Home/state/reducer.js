@@ -5,11 +5,11 @@ const userSession = {
 	expiresIn: 0,
 	hasCompletedRegisteration: false,
 	loadingLogin: false,
+	loginSuccess: false,
 	loginFailed: false
 };
 
 const loginReducer = (state = userSession, action) => {
-	console.log(action.data)
 	switch (action.type) {
 		case LOGIN_PENDING:
 			return {
@@ -19,11 +19,12 @@ const loginReducer = (state = userSession, action) => {
 		case LOGIN_SUCCESS:
 			return {
 				...state,
+				token: action.data.token,
+				expiresIn: action.data.expiresIn,
+				hasCompletedRegisteration: action.data.hasCompletedRegisteration,
 				loadingLogin: false,
-				token: action.token,
-				loginFailed: false,
-				expiresIn: action.expiresIn,
-				hasCompletedRegisteration: action.hasCompletedRegisteration
+				loginSuccess: true,
+				loginFailed: false
 			};
 		case LOGIN_FAILURE:
 			return {
@@ -32,8 +33,13 @@ const loginReducer = (state = userSession, action) => {
 				loginFailed: true
 			};
 		case LOGOUT_SUCCESS:
-			return {};
-
+			return {
+				...state,
+				token: '',
+				expiresIn: 0,
+				hasCompletedRegisteration: false,
+				loginSuccess: false
+			};
 		default:
 			return state;
 	}

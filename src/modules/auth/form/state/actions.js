@@ -6,12 +6,20 @@ import {
 } from './types';
 import axios from 'axios';
 
-export const logout = () => {
+export const logout = token => {
 	return dispatch => {
+		console.log(token);
+		const AuthStr = 'Bearer '.concat(token);
 		axios
-			.post('https://aiesec-asu-im-api.herokuapp.com/api/Account/Logout')
+			.post(
+				'https://aiesec-asu-im-api.herokuapp.com/api/Account/Logout',
+				null,
+				{
+					headers: { Authorization: AuthStr }
+				}
+			)
 			.then(response => {
-				dispatch(logoutAction);
+				dispatch(logoutAction());
 			})
 			.catch(err => {
 				dispatch(logoutFailure(err));
@@ -19,48 +27,54 @@ export const logout = () => {
 			});
 	};
 };
-export const save = (userData,token) => {
-	console.log(token)
+export const save = (userData, token) => {
 	return dispatch => {
-		let email ='';
-	axios.get('https://aiesec-asu-im-api.herokuapp.com/api/Account')
-	.then( response => {
-			//email=response.data.email
-			console.log(response)
-	})
-	.catch(err => {
-		console.log("Getting Data Error")
-	})
-
-	const user = {
-		email:email ,
-		firstName:userData.firstName,
-		lastName:userData.lastName,
-		nickName:userData.nickName,
-		mobileNumber:userData.mobileNumber,
-		birthDate:userData.birthDate
-	}
-	axios.put('https://aiesec-asu-im-api.herokuapp.com/api/Account/Update' , user)
-	.then( response => {
-			console.log('updated successfully')
-			axios.put('https://aiesec-asu-im-api.herokuapp.com/api/Account/ChangePassword' , 
-			{
-				oldPassword:userData.oldPassword,
-				newPassword:userData.newPassword
-			}).then( response =>
-				{
-					console.log('Password updated successfully')
-				}
-			).catch(err => {
-				console.log(err)
+		const AuthStr = 'Bearer '.concat(token);
+		axios
+			.get('https://aiesec-asu-im-api.herokuapp.com/api/Account', {
+				headers: { Authorization: AuthStr }
 			})
-	})
-	.catch(err => {
-		console.log(err)
-	})
-
-
-
+			.then(response => {
+				const user = {
+					email: response.data.email,
+					firstName: userData.firstName,
+					lastName: userData.lastName,
+					nickName: userData.nickName,
+					mobileNumber: userData.mobileNumber,
+					birthDate: userData.birthDate
+				};
+				axios
+					.all([
+						axios.put(
+							'https://aiesec-asu-im-api.herokuapp.com/api/Account/Update',
+							user,
+							{
+								headers: { Authorization: AuthStr }
+							}
+						),
+						axios.put(
+							'https://aiesec-asu-im-api.herokuapp.com/api/Account/ChangePassword',
+							{
+								oldPassword: userData.oldPassword,
+								newPassword: userData.password
+							},
+							{
+								headers: { Authorization: AuthStr }
+							}
+						)
+					])
+					.then(() => {
+						dispatch(dataSaved);
+					})
+					.catch(err => {
+						console.log(err);
+						dispatch(dataSavedFailed);
+					});
+			})
+			.catch(err => {
+				console.log(err);
+				dispatch(dataSavedFailed);
+			});
 	};
 };
 const dataSaved = () => {

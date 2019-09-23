@@ -4,7 +4,8 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 import Register from './modules/auth/register/Register.jsx';
 import Home from './modules/auth/Home/Home';
 import Form from './modules/auth/form/Form';
-const App = () => {
+import { connect } from 'react-redux';
+const App = props => {
 	return (
 		<Router>
 			<div className='App'>
@@ -15,5 +16,9 @@ const App = () => {
 		</Router>
 	);
 };
-
-export default App;
+const mapStateToProps = state => {
+	return {
+		token: state.login.token
+	};
+};
+export default connect(mapStateToProps)(App);

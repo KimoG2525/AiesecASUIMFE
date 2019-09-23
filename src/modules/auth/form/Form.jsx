@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './style.scss';
 import MixImg from '../../../assets/images/mix.png';
 import { TextField } from '@material-ui/core';
@@ -8,6 +8,7 @@ import { validateUser } from '../../../HelperFunctions/validation';
 import { save, logout } from './state/actions';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import DatePickers from './../../sideComponents/datePicker';
+import PopUp from './../../sideComponents/popUp';
 const Form = props => {
 	const [userData, setUserData] = useState({
 		firstName: '',
@@ -17,52 +18,53 @@ const Form = props => {
 		birthDate: new Date(),
 		password: ''
 	});
-
+	const [popupMessage, setpopupMessage] = useState('');
+	const popUpRef = useRef();
 	const handleChange = event => {
-		setUserData({...userData, [event.target.name]: event.target.value });
+		setUserData({ ...userData, [event.target.name]: event.target.value });
 	};
 	const handlePhoneChange = value => {
-		//console.log(value)
-		setUserData({...userData, mobileNumber:value})
-	}
+		setUserData({ ...userData, mobileNumber: value });
+	};
 	const handleDateChange = value => {
-		setUserData({...userData, birthDate:value})
-	}
+		setUserData({ ...userData, birthDate: value });
+	};
 	const onSubmit = event => {
-		console.log(props.token)
 		event.preventDefault();
 		//validate data
-		if (validateUser(userData)) {
-			//call api
-			props.save(userData,props.token);
-		}
-		//redirect to home page
-		//props.history.push('/')
+		validateUser(userData);
+		//call api
+
+		props.save(userData, props.token);
+
+		//redirect to dashboard page
+		//props.history.push('/dashboard')
 	};
 	useEffect(() => {
-	//	console.log(props.token)
-		if (props.logoutSuccess) {
+		if (props.formStatus.saveSuccess) {
+			//redirect to dashboard
+			props.history.push('/dashboard');
+		}
+		if (props.formStatus.saveFailed) {
+			setpopupMessage('Save Failed, Please Try Again.');
+			popUpRef.current.handleClickOpen();
+		}
+		if (props.formStatus.logoutSuccess) {
 			//redirect to login page
-			props.history.pushState(null, 'login');
-		} else {
-			console.log('logout Failed');
+			props.history.push('/');
+		}
+		if (props.formStatus.logoutFailed) {
+			setpopupMessage('Logout Failed, Please Try Again.');
+			popUpRef.current.handleClickOpen();
 		}
 	}, [props]);
 	return (
-		<form className='form-container'>
+		<div className='form-container'>
 			<div className='blue'>
-				{/* <div className='aiesec'>
-					<div className='aiesecImg'>
-						<img src={AiesecImg} alt='logo' />
-					</div>
-					<label className='headlbl'>AIN SHAMS UNIVERSITY</label>
-				</div> */}
-
 				<div className='logo'>
 					<img src={MixImg} alt='logo' />
 				</div>
 			</div>
-
 			<div className='white'>
 				<div className='login'>
 					<div className='container'>
@@ -82,7 +84,6 @@ const Form = props => {
 												margin='normal'
 												variant='outlined'
 												style={{ width: '240px' }}
-												// 
 											/>
 										</div>
 										<div className='form-group'>
@@ -95,14 +96,11 @@ const Form = props => {
 												name='lastName'
 												margin='normal'
 												variant='outlined'
-												style={{marginLeft: '200px', width: '240px' }}
+												style={{ marginLeft: '200px', width: '240px' }}
 											/>
 										</div>
-						
-						
 									</div>
 									<div className='row-data'>
-									
 										<div className='form-group'>
 											<TextField
 												required
@@ -113,8 +111,7 @@ const Form = props => {
 												name='nickName'
 												margin='normal'
 												variant='outlined'
-												style={{width: '240px' }}
-											
+												style={{ width: '240px' }}
 											/>
 										</div>
 										<div className='form-group'>
@@ -132,25 +129,26 @@ const Form = props => {
 										</div>
 									</div>
 									<div className='date-phone'>
-									<div className='form-group'>
-										<DatePickers 
-										handleDateChange={handleDateChange}
-										birthDate={userData.birthDate} />
+										<div className='form-group'>
+											<DatePickers
+												handleDateChange={handleDateChange}
+												birthDate={userData.birthDate}
+											/>
+										</div>
+										<div className='form-group'>
+											<MuiPhoneNumber
+												required
+												variant='outlined'
+												className='phone-number'
+												defaultCountry={'eg'}
+												onChange={handlePhoneChange}
+												name='mobileNumber'
+												label='Phone Number'
+												style={{ width: '600px' }}
+											/>
+										</div>
 									</div>
-									<div className='form-group'>
-										<MuiPhoneNumber
-											required
-											variant='outlined'
-											className='phone-number'
-											defaultCountry={'eg'}
-											onChange={handlePhoneChange}
-											name='mobileNumber'
-											label="Phone Number"
-											style={{ width: '600px'  }}
-										/>
-									</div>
-									</div>
-									
+
 									<div className='row-data'>
 										<div className='form-group'>
 											<TextField
@@ -182,51 +180,54 @@ const Form = props => {
 									</div>
 								</div>
 							</div>
-							
 						</div>
-						
 					</div>
-					
 				</div>
-				
 			</div>
 			<div className='footer'>
-								<Button
-									onClick={onSubmit}
-									type='submit'
-									variant='primary'
-									style={{
-										width: '100px',
-										marginTop: '-20px',
-										marginRight: '50px',
-										fontWeight: 'bold'
-									}}>
-									Save
-								</Button>
-								<Button
-									onClick={props.logout}
-									variant='primary'
-									style={{
-										width: '100px',
-										marginTop: '-20px',
-										marginRight: '550px',
-										fontWeight: 'bold'
-									}}>
-									Cancel
-								</Button>
-							</div>
-		</form>
+				<Button
+					onClick={onSubmit}
+					type='submit'
+					variant='primary'
+					style={{
+						width: '100px',
+						marginTop: '-20px',
+						marginRight: '50px',
+						fontWeight: 'bold'
+					}}>
+					Save
+				</Button>
+				<Button
+					onClick={e => props.logout(props.token)}
+					variant='primary'
+					style={{
+						width: '100px',
+						marginTop: '-20px',
+						marginRight: '550px',
+						fontWeight: 'bold'
+					}}>
+					Cancel
+				</Button>
+			</div>
+			<PopUp
+				ref={popUpRef}
+				id='PopupMessage'
+				title='Register Failed !'
+				message={popupMessage}
+			/>
+		</div>
 	);
 };
 const mapDispatchToProps = dispatch => {
 	return {
-		logout: () => dispatch(logout()),
-		save: (userData,token) => dispatch(save(userData,token))
+		logout: token => dispatch(logout(token)),
+		save: (userData, token) => dispatch(save(userData, token))
 	};
 };
 const mapStateToProps = state => {
 	return {
-		token:state.login.token
+		token: state.login.token,
+		formStatus: state.partialRegister
 	};
 };
 export default connect(
