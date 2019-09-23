@@ -17,7 +17,7 @@ export const validatePassword = password => {
 	return true;
 };
 export const validateUser = userData => {
-	console.log(userData)
+	console.log(userData);
 	if (
 		userData.firstName !== '' &&
 		userData.lastName !== '' &&

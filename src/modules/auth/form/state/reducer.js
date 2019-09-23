@@ -4,42 +4,43 @@ import {
 	SAVE_FAILED,
 	SAVE_SUCCESS
 } from './types';
-import { LOGIN_SUCCESS } from '../../Home/state/types';
-import { registerReducers } from './../../register/state/reducers';
 
 const formStatus = {
 	logoutSuccess: false,
+	logoutFailed: false,
 	saveSuccess: false,
-	logoutError: {},
-	saveError: {}
+	saveFailed: false
 };
 
-const registerReducer = (state = formStatus, action) => {
+const partialRegisterReducer = (state = formStatus, action) => {
 	switch (action.type) {
 		case SAVE_SUCCESS:
 			return {
 				...state,
-				saveSuccess: true
-			};
-		case LOGIN_SUCCESS:
-			return {
-				...state,
-				logoutSuccess: true
+				saveSuccess: true,
+				saveFailed: false
 			};
 		case SAVE_FAILED:
+			console.log('failedddd');
 			return {
 				...state,
 				saveSuccess: false,
-				saveError: action.error
+				saveFailed: true
+			};
+		case LOGOUT_SUCCESS:
+			return {
+				...state,
+				logoutSuccess: true,
+				logoutFailed: false
 			};
 		case LOGOUT_FAILED:
 			return {
 				...state,
 				logoutSuccess: false,
-				logoutError: action.error
+				logoutFailed: true
 			};
 		default:
 			return state;
 	}
 };
-export const RegisterReducers = { registerReducer };
+export const partialRegisterReducers = { partialRegisterReducer };

@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { login } from '../Home/state/actions';
 import PopUp from '../../sideComponents/popUp';
 import CheckBox from '../../sideComponents/checkBox';
+
 const Home = props => {
 	const [user, setUser] = useState({
 		email: '',
@@ -22,7 +23,7 @@ const Home = props => {
 	const popUpRef = useRef();
 
 	const onSubmit = () => {
-		if (validatePassword(user.password) || validateEmail(user.email)) {
+		if (validatePassword(user.password) && validateEmail(user.email)) {
 			setError({ ...error, email: false, password: false });
 			props.login(user);
 			setUser({
@@ -40,7 +41,11 @@ const Home = props => {
 		if (props.loginFailed) {
 			popUpRef.current.handleClickOpen();
 		}
-	}, [props.loginFailed]);
+		if (props.loginSuccess) {
+			if (props.hasCompletedRegisteration) props.history.push('/form');
+			else props.history.push('/form');
+		}
+	}, [props]);
 
 	const handleChange = event => {
 		setUser({ ...user, [event.target.name]: event.target.value });
@@ -97,7 +102,6 @@ const Home = props => {
 										<CheckBox
 											checked={user.rememberMe}
 											handleChecked={handleChecked}
-											
 										/>
 									</div>
 								</div>
@@ -130,7 +134,9 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
 	return {
 		loginFailed: state.login.loginFailed,
-		token: state.login.token
+		token: state.login.token,
+		loginSuccess: state.login.loginSuccess,
+		hasCompletedRegisteration: state.login.hasCompletedRegisteration
 	};
 };
 export default connect(
