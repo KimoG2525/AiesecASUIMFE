@@ -5,8 +5,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 export default function configureStore(initialState = {}) {
 	const rootReducer = combineReducers({
 		login: reducers['loginReducer'],
-		register: reducers['registerReducer'],
-		partialRegister: reducers['partialRegisterReducer']
+		register: reducers['completeRegisterationReducer'],
+		partialRegister: reducers['partialRegisterReducer'],
+		enablerProfile: reducers['getEnablerReducer'],
+		dashboard: reducers['getAllEnablersReducer']
 	});
 	return createStore(
 		rootReducer,

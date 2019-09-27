@@ -1,10 +1,12 @@
-import { REGISTER_FAILURE, REGISTER_PENDING, REGISTER_SUCCESS } from './types';
+import {
+	REGISTER_FAILURE,
+	REGISTER_PENDING,
+	REGISTER_SUCCESS
+} from '../../../../global/types/registerTypes';
 const registerInitalState = {
-	data: {},
-	error: 0,
 	registerPending: false
 };
-const registerReducer = (state = registerInitalState, action) => {
+const partialRegisterReducer = (state = registerInitalState, action) => {
 	switch (action.type) {
 		case REGISTER_PENDING:
 			return {
@@ -26,4 +28,4 @@ const registerReducer = (state = registerInitalState, action) => {
 			return state;
 	}
 };
-export const registerReducers = { registerReducer };
+export const partialRegisterReducers = { partialRegisterReducer };
