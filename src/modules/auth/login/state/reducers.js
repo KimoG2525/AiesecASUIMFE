@@ -1,5 +1,9 @@
-import { LOGIN_FAILURE, LOGIN_PENDING, LOGIN_SUCCESS } from './types';
-import { LOGOUT_SUCCESS } from './../../form/state/types';
+import {
+	LOGIN_FAILURE,
+	LOGIN_PENDING,
+	LOGIN_SUCCESS
+} from '../../../../global/types/loginTypes';
+import { LOGOUT_SUCCESS } from '../../../../global/types/logoutTypes';
 const userSession = {
 	token: '',
 	expiresIn: 0,

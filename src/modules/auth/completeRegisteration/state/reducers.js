@@ -1,10 +1,8 @@
+import { SAVE_FAILED, SAVE_SUCCESS } from '../../../../global/types/saveTypes';
 import {
 	LOGOUT_FAILED,
-	LOGOUT_SUCCESS,
-	SAVE_FAILED,
-	SAVE_SUCCESS
-} from './types';
-
+	LOGOUT_SUCCESS
+} from '../../../../global/types/logoutTypes';
 const formStatus = {
 	logoutSuccess: false,
 	logoutFailed: false,
@@ -12,7 +10,7 @@ const formStatus = {
 	saveFailed: false
 };
 
-const partialRegisterReducer = (state = formStatus, action) => {
+const completeRegisterationReducer = (state = formStatus, action) => {
 	switch (action.type) {
 		case SAVE_SUCCESS:
 			return {
@@ -21,7 +19,6 @@ const partialRegisterReducer = (state = formStatus, action) => {
 				saveFailed: false
 			};
 		case SAVE_FAILED:
-			console.log('failedddd');
 			return {
 				...state,
 				saveSuccess: false,
@@ -43,4 +40,4 @@ const partialRegisterReducer = (state = formStatus, action) => {
 			return state;
 	}
 };
-export const partialRegisterReducers = { partialRegisterReducer };
+export const completeRegistrationReducers = { completeRegisterationReducer };

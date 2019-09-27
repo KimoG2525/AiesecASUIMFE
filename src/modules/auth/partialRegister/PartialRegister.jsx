@@ -4,17 +4,18 @@ import LoginImg from '../../../assets/images/login.png';
 import PopUp from '../../sideComponents/popUp';
 import './style.scss';
 import { connect } from 'react-redux';
-import { validateEmail } from '../../../HelperFunctions/validation.js';
+import { validateEmail } from '../../../global/functions/validation';
 import { TextField } from '@material-ui/core';
 import { Button } from 'react-bootstrap';
 import { register } from './state/actions';
 import ComboBox from '../../sideComponents/comboBox';
+import { URL } from '../../../global/API_URL';
 import Axios from 'axios';
 const Register = props => {
 	const [user, setUser] = useState({
 		email: '',
-		function: 0,
-		position: 0
+		function: -1,
+		position: -1
 	});
 	const [data, setData] = useState({
 		function: [],
@@ -25,12 +26,8 @@ const Register = props => {
 	const popUpRef = useRef();
 	const getData = () => {
 		Axios.all([
-			Axios.get(
-				'https://aiesec-asu-im-api.herokuapp.com/api/Miscellaneous/Functions'
-			),
-			Axios.get(
-				'https://aiesec-asu-im-api.herokuapp.com/api/Miscellaneous/Positions'
-			)
+			Axios.get(URL + '/Miscellaneous/Functions'),
+			Axios.get(URL + '/Miscellaneous/Positions')
 		]).then(
 			Axios.spread((func, pos) => {
 				setData({ function: func.data, position: pos.data });

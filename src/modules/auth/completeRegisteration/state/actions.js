@@ -1,23 +1,20 @@
+import { SAVE_FAILED, SAVE_SUCCESS } from '../../../../global/types/saveTypes';
 import {
 	LOGOUT_FAILED,
-	LOGOUT_SUCCESS,
-	SAVE_FAILED,
-	SAVE_SUCCESS
-} from './types';
+	LOGOUT_SUCCESS
+} from '../../../../global/types/logoutTypes';
+
 import axios from 'axios';
+import { URL } from './../../../../global/API_URL';
 
 export const logout = token => {
 	return dispatch => {
 		console.log(token);
 		const AuthStr = 'Bearer '.concat(token);
 		axios
-			.post(
-				'https://aiesec-asu-im-api.herokuapp.com/api/Account/Logout',
-				null,
-				{
-					headers: { Authorization: AuthStr }
-				}
-			)
+			.post(URL + '/Account/Logout', null, {
+				headers: { Authorization: AuthStr }
+			})
 			.then(response => {
 				dispatch(logoutAction());
 			})
@@ -31,7 +28,7 @@ export const save = (userData, token) => {
 	return dispatch => {
 		const AuthStr = 'Bearer '.concat(token);
 		axios
-			.get('https://aiesec-asu-im-api.herokuapp.com/api/Account', {
+			.get(URL + '/Account', {
 				headers: { Authorization: AuthStr }
 			})
 			.then(response => {
@@ -45,18 +42,14 @@ export const save = (userData, token) => {
 				};
 				axios
 					.all([
+						axios.put(URL + '/Account/Update', user, {
+							headers: { Authorization: AuthStr }
+						}),
 						axios.put(
-							'https://aiesec-asu-im-api.herokuapp.com/api/Account/Update',
-							user,
-							{
-								headers: { Authorization: AuthStr }
-							}
-						),
-						axios.put(
-							'https://aiesec-asu-im-api.herokuapp.com/api/Account/ChangePassword',
+							URL + '/Account/ChangePassword',
 							{
 								oldPassword: userData.oldPassword,
-								newPassword: userData.password
+								newPassword: userData.newPassword
 							},
 							{
 								headers: { Authorization: AuthStr }

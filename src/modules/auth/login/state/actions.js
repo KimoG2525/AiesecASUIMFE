@@ -1,12 +1,16 @@
-import { LOGIN_FAILURE, LOGIN_PENDING, LOGIN_SUCCESS } from './types';
-
+import {
+	LOGIN_FAILURE,
+	LOGIN_PENDING,
+	LOGIN_SUCCESS
+} from '../../../../global/types/loginTypes';
 import axios from 'axios';
+import { URL } from './../../../../global/API_URL';
 
 export const login = user => {
 	return dispatch => {
 		dispatch(loginPending);
 		axios
-			.post('https://aiesec-asu-im-api.herokuapp.com/api/Account/Token', user)
+			.post(URL + '/Account/Token', user)
 			.then(response => {
 				dispatch(loginSuccess(response.data));
 			})

@@ -5,11 +5,11 @@ import TravelImg from '../../../assets/images/Earth.png';
 import {
 	validateEmail,
 	validatePassword
-} from '../../../HelperFunctions/validation.js';
+} from '../../../global/functions/validation.js';
 import { TextField } from '@material-ui/core';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { login } from '../Home/state/actions';
+import { login } from '../login/state/actions';
 import PopUp from '../../sideComponents/popUp';
 import CheckBox from '../../sideComponents/checkBox';
 
@@ -42,8 +42,9 @@ const Home = props => {
 			popUpRef.current.handleClickOpen();
 		}
 		if (props.loginSuccess) {
-			if (props.hasCompletedRegisteration) props.history.push('/form');
-			else props.history.push('/form');
+			if (props.hasCompletedRegisteration)
+				props.history.push('/completeregisteration');
+			else props.history.push('/completeregisteration');
 		}
 	}, [props]);
 

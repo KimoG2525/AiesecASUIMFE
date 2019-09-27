@@ -1,8 +1,13 @@
-import { loginReducers } from '../modules/auth/Home/state/reducer';
-import { registerReducers } from './../modules/auth/register/state/reducers';
-import { partialRegisterReducers } from './../modules/auth/form/state/reducer';
+import { loginReducers } from '../modules/auth/login/state/reducers';
+import { enablerProfileReducers } from './../modules/enablers/enablerProfile/state/reducers';
+import { dashboardReducers } from './../modules/enablers/dashboard/state/reducers';
+
+import { partialRegisterReducers } from './../modules/auth/partialRegister/state/reducers';
+import { completeRegistrationReducers } from './../modules/auth/completeRegisteration/state/reducers';
 export const reducers = {
 	...loginReducers,
-	...registerReducers,
-	...partialRegisterReducers
+	...completeRegistrationReducers,
+	...partialRegisterReducers,
+	...enablerProfileReducers,
+	...dashboardReducers
 };

@@ -1,13 +1,15 @@
-import { REGISTER_FAILURE, REGISTER_PENDING, REGISTER_SUCCESS } from './types';
+import {
+	REGISTER_FAILURE,
+	REGISTER_PENDING,
+	REGISTER_SUCCESS
+} from '../../../../global/types/registerTypes';
+import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
 export const register = user => {
 	return dispatch => {
 		dispatch(registerPending());
 		axios
-			.post(
-				'https://aiesec-asu-im-api.herokuapp.com/api/Account/PartialRegister',
-				user
-			)
+			.post(URL + '/Account/PartialRegister', user)
 			.then(response => {
 				dispatch(registerSuccess());
 			})

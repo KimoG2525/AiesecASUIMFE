@@ -4,11 +4,11 @@ import MixImg from '../../../assets/images/mix.png';
 import { TextField } from '@material-ui/core';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { validateUser } from '../../../HelperFunctions/validation';
+import { validateUser } from '../../../global/functions/validation';
 import { save, logout } from './state/actions';
 import MuiPhoneNumber from 'material-ui-phone-number';
-import DatePickers from './../../sideComponents/datePicker';
-import PopUp from './../../sideComponents/popUp';
+import DatePickers from '../../sideComponents/datePicker';
+import PopUp from '../../sideComponents/popUp';
 const Form = props => {
 	const [userData, setUserData] = useState({
 		firstName: '',
@@ -16,7 +16,9 @@ const Form = props => {
 		mobileNumber: '',
 		nickName: '',
 		birthDate: new Date(),
-		password: ''
+		oldPassword: '',
+		newPassword: '',
+		repeatedPassword: ''
 	});
 	const [popupMessage, setpopupMessage] = useState('');
 	const popUpRef = useRef();
@@ -32,13 +34,15 @@ const Form = props => {
 	const onSubmit = event => {
 		event.preventDefault();
 		//validate data
-		validateUser(userData);
-		//call api
-
-		props.save(userData, props.token);
-
-		//redirect to dashboard page
-		//props.history.push('/dashboard')
+		if (validateUser(userData)) {
+			//call api
+			props.save(userData, props.token);
+			//redirect to dashboard page
+			//props.history.push('/dashboard')
+		} else {
+			setpopupMessage('Save Failed, Please Fill Out All The Fields Correctly.');
+			popUpRef.current.handleClickOpen();
+		}
 	};
 	useEffect(() => {
 		if (props.formStatus.saveSuccess) {
@@ -157,7 +161,7 @@ const Form = props => {
 												id='outlined-first-password-input'
 												label='New Password'
 												type='password'
-												name='firstpassword'
+												name='newPassword'
 												margin='normal'
 												variant='outlined'
 												style={{ marginRight: '200px', width: '240px' }}
@@ -168,7 +172,7 @@ const Form = props => {
 												required
 												onChange={handleChange}
 												id='outlined-second-password-input'
-												name='password'
+												name='repeatedPassword'
 												label='Repeat Password'
 												type='password'
 												margin='normal'
