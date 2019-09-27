@@ -1,0 +1,33 @@
+.main-container{
+    height: 100vh;
+    background-image: url('../../../assets/images/companies.jpg');
+    background-repeat: no-repeat;
+    .header{
+        display: flex;
+        flex-direction: row;
+        margin-top: 50px;
+
+        h1{
+            font-size: 40px;
+            font-weight: bold;
+            margin-left: 60px;
+        }
+        .combobox{
+            margin-left: 250px;
+        }
+    }
+    .content{
+     overflow-y:auto;
+     overflow-x:hidden;
+     height:41em;
+     width:109.5em;
+    .body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 120px;
+
+   
+    }
+}
+    }
