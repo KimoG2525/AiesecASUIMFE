@@ -20,6 +20,7 @@ const EnablerProfile = () => {
             <div className="container">
             <div className="head">
                 <HeadsetMicOutlinedIcon style={{fontSize:'30px',marginRight:'10px' ,marginLeft:'10px',marginTop:'0px'}}/>
+
                    <label className="head-label">Company Responsible</label>
                   
             </div>
@@ -41,11 +42,13 @@ const EnablerProfile = () => {
         <div className="container">
         <div className="head">
         <HeadsetMicOutlinedIcon style={{fontSize:'30px',marginRight:'10px' ,marginLeft:'10px',marginTop:'0px'}}/>
+
                    <label className="head-label">AIESEC Responsible</label>
                   
             </div>
             <div className="list">
             <div className="icons">
+
         <PersonOutlineIcon style={{fontSize:'20px',marginBottom:'10px'}}/>
         <PhoneOutlinedIcon style={{fontSize:'20px',marginBottom:'10px'}}/>
         <MailOutlineOutlinedIcon style={{fontSize:'20px'}}/>
