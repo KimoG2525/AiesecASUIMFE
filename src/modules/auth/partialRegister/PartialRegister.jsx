@@ -8,7 +8,7 @@ import { validateEmail } from '../../../global/functions/validation';
 import { TextField } from '@material-ui/core';
 import { Button } from 'react-bootstrap';
 import { register } from './state/actions';
-import ComboBox from '../../sideComponents/comboBox';
+import ComboBox from '../../sideComponents/comboBoxRegister';
 import { URL } from '../../../global/API_URL';
 import Axios from 'axios';
 const Register = props => {

@@ -1,0 +1,120 @@
+.card {
+    width: 22em;
+    height: 9em;
+    //min-height: 44em;
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    margin-top: 100px;
+    margin-left: 60px;
+    border-radius: 10px;
+    position: relative;
+    // z-index: 99;
+    .container {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    //   justify-content: center;
+    //   align-items: center;
+      background-color: #fff;
+      box-shadow: 0px 0px 12px 4px rgba(15, 15, 15, 0.3);
+      border-radius: 7px;
+      position: relative;
+      z-index: 99;
+      width: 100%;
+      height: 100%;
+      padding: 17px 10px;
+      transition: transform 200ms ease-in-out;
+    }
+  }
+
+  .top{
+      display: flex;
+      flex-direction: row;
+.logo{
+    align-items: flex-start;
+
+.image{
+    max-width:100px;
+    max-height:80px;
+    margin-left: -30px;
+    margin-top: -30px;
+}
+.bigImage{
+  max-width:150px;
+  max-height:110px;
+  margin-left: -15px;
+  margin-top: -30px;
+}
+}
+.company-name{
+    margin-left: 90px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.big-company-name{
+  margin-left: 50px;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+  }
+
+  .bottomCard{
+    display: flex;
+    flex-direction: column;
+    margin-left:90px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+.name{ 
+ align-self: flex-end;
+
+}
+.phone{
+  align-self: flex-end;
+  margin-left:75px;
+}
+.big-name{
+  margin-top: 20px;
+  margin-left:50px;
+  align-self: flex-end;
+  margin-right: 5px;
+  font-size: 17px;
+}
+.big-phone{
+  margin-left:50px;
+  margin-right: 5px;
+  align-self: flex-end;
+  font-size: 17px;
+}
+  }
+
+  .bigCard {
+    width: 27em;
+    height: 13em;
+    //min-height: 44em;
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    margin-top: 100px;
+    margin-left: 60px;
+    position: relative;
+    // z-index: 99;
+    .container {
+      display: flex;
+      flex-direction: column;
+    //   justify-content: center;
+    //   align-items: center;
+      background-color: #fff;
+      box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+      border-radius: 4px;
+      position: relative;
+      z-index: 99;
+      width: 100%;
+      height: 100%;
+      padding: 17px 10px;
+      transition: transform 200ms ease-in-out;
+    }
+  }
+
+
