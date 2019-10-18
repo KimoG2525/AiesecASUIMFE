@@ -1,13 +1,47 @@
-import React from 'react';
+import React ,{useEffect, useState} from 'react';
 import Card from '../../sideComponents/card'
 import NavBar from '../../sideComponents/navBar'
 import ComboBox from '../../sideComponents/comboBoxDashboard'
+import { connect } from 'react-redux';
+import {getAllEnablers} from './state/actions'
 import "./style.scss"
 import { Button } from 'semantic-ui-react';
 
 const Dashboard = (props) => {
+    const [pageNum,setPageNum] = useState(1)
+    const convert = (enabler) =>{
 
-    const myC = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+  return      {
+name: enabler.data.name,
+base64Logo: enabler.data.base64Logo,
+responsibleName:enabler.data.responsibleName,
+responsiblePhone:enabler.data.responsiblePhone,
+        }
+
+    }
+    useEffect(() => {
+	  props.getAllEnablers(pageNum)
+    });
+
+    useEffect(() => {
+        props.getAllEnablers(pageNum)
+      },[props,pageNum]);
+    
+    const BodyRender= () =>{
+        if(props.enablers.length){
+            return(
+                props.enablers.map((enabler,index) => 
+                     <Card enabler={()=>convert(enabler)} key={index} big={false} history={props.history}/>
+                  )
+                      )
+        }
+        else{
+            return(
+                <h1>Loading....</h1>
+            )
+        }
+
+    }
 
     return(
         <div className="main-container" >
@@ -40,15 +74,25 @@ const Dashboard = (props) => {
       
 
             <div className="body"> 
-{
-    myC.map((oneC,index) => 
-       <Card key={index} big={false} history={props.history}/>
-    )
-}
+            <BodyRender />
             </div>
         </div>
         </div>
     )
 }
 
-export default Dashboard
+
+const mapDispatchToProps = dispatch => {
+	return {
+		getAllEnablers: pageNum => dispatch(getAllEnablers(pageNum))
+	};
+};
+const mapStateToProps = state => {
+	return {
+		enablers: state.dashboard.allEnablers
+	};
+};
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Dashboard);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Card from '../../sideComponents/card'
 import NavBar from '../../sideComponents/navBar'
 import "./style.scss"
@@ -9,13 +9,29 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
 import MailOutlineOutlinedIcon from '@material-ui/icons/MailOutlineOutlined';
 import HeadsetMicOutlinedIcon from '@material-ui/icons/HeadsetMicOutlined';
-// import WrappedMap from '../../sideComponents/map';
-const EnablerProfile = () => {
+import { connect } from 'react-redux';
+import {getEnabler} from './state/actions'
+
+const EnablerProfile = (props) => {
+    const id = props.match.params.id;
+
+    const convert =(enabler) => {
+        return      {
+            name: enabler.name,
+            base64Logo: enabler.base64Logo,
+            responsibleName:enabler.companyResponsible.name,
+            responsiblePhone:enabler.companyResponsible.phoneNumber,
+                    }
+    }
+    
+    useEffect(() => {
+        props.getEnabler(id)
+      });
     return(
         <div className="main-container" >
              <NavBar/>
              <div className="top">
-            <Card big={true}/>     
+            <Card big={true} enabler={()=>convert(props.enabler)}/>     
             <div className="responsible">
             <div className="container">
             <div className="head">
@@ -31,9 +47,9 @@ const EnablerProfile = () => {
         <MailOutlineOutlinedIcon style={{fontSize:'20px'}}/>
             </div>
             <div className="labels">
-           <label >NAME</label>
-           <label>PHONE</label>
-           <label>MAIL</label>
+           <label >{props.enabler.companyResponsible.name}</label>
+           <label>{props.enabler.companyResponsible.phoneNumber}</label>
+           <label>{props.enabler.companyResponsible.email}</label>
             </div>
             </div>
             </div>
@@ -54,9 +70,9 @@ const EnablerProfile = () => {
         <MailOutlineOutlinedIcon style={{fontSize:'20px'}}/>
             </div>
             <div className="labels">
-            <label>NAME</label>
-           <label>PHONE</label>
-           <label>MAIL</label>
+            <label>{props.enabler.aiesecResponsible.name}</label>
+           <label>{props.enabler.aiesecResponsible.phone}</label>
+           <label>{props.enabler.aiesecResponsible.email}</label>
             </div>
             </div>
             </div>
@@ -80,12 +96,12 @@ const EnablerProfile = () => {
         <MailOutlineOutlinedIcon style={{fontSize:'30px'}}/>
             </div>
             <div className="labels">
-            <label>NAME</label>
-           <label>PHONE</label>
-            <label>LOCATION</label>
-            <label>ADDRESS</label>
-            <label>WEBSITE</label>
-            <label>MAIL</label>
+            <label>{props.enabler.name}</label>
+           <label>{props.enabler.mobileNumber}</label>
+            <label>{props.enabler.addressUrl}</label>
+            <label>{props.enabler.address}</label>
+            <label>{props.enabler.websiteUrl}</label>
+            <label>{props.enabler.emailAddress}</label>
             </div>
             </div>
             </div>
@@ -100,12 +116,17 @@ const EnablerProfile = () => {
     )
 }
 
-export default EnablerProfile
-
-
-{/* <WrappedMap
-googleMapURL={'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyDQS5eorO28nlp8d04c7ww-zq2dPhUnykI'}
-loadingElement={<div style={{height:'100%'}} />}
-containerElement={<div style={{height:'100%'}} />}
-mapElement={<div style={{height:'100%'}} />}
-/> */}
+const mapDispatchToProps = dispatch => {
+	return {
+		getEnabler: id => dispatch(getEnabler(id))
+	};
+};
+const mapStateToProps = state => {
+	return {
+		enabler: state.enablerProfile.enablerState
+	};
+};
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(EnablerProfile);

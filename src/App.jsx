@@ -22,7 +22,7 @@ const App = props => {
 					component={Dashboard}
 				/>
 				<Route
-					path='/enablerprofile'
+					path='/enablerprofile/:id'
 					component={EnablerProfile}
 				/>
 

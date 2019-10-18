@@ -2,29 +2,31 @@ import React from 'react';
 import "./styling/cardStyle.scss"
 import WalkImg from "../../assets/images/walkAlone.png"
 
-const Card = (props) => {
+const Card = ({enabler,big,history}) => {
+
+
 
   const onClickRouter = () => {
-    if(!props.big)
-    props.history.push('/enablerProfile')
+    if(!big)
+    history.push(`/enablerProfile/${enabler.id}`)
   }
   return(
-    <div className={(props.big)?'bigCard':'card'}>
+    <div className={(big)?'bigCard':'card'}>
     <div className='container' onClick={onClickRouter}> 
     <div className='top'>
 <div className='logo'>
-<img className={(props.big)?'bigImage':'image'} src={WalkImg} alt="logo" />
+<img className={(big)?'bigImage':'image'} src={'data:image/*;base64, '+enabler.base64Logo} alt="logo" />
 </div>
-<div className={(props.big)?'big-company-name':'company-name'}>
-Orascom Group
+<div className={(big)?'big-company-name':'company-name'}>
+ {enabler.name}
 </div>
     </div>
     <div className='bottomCard'>
-    <div className={(props.big)?'big-name':'name'}>
-      Ahmed Bahaa
+    <div className={(big)?'big-name':'name'}>
+    {enabler.responsibleName}
 </div>
-<div className={(props.big)?'big-phone':'phone'}>
-+201234567890
+<div className={(big)?'big-phone':'phone'}>
+{enabler.responsiblePhone}
 </div>
     </div>
   </div>
