@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	formControl: {
 		margin: theme.spacing(1),
-		minWidth: 310
+		minWidth: 310,
 	},
 	selectEmpty: {
 		marginTop: theme.spacing(2)
@@ -50,7 +50,7 @@ const ComboBox = props => {
 	return (
 		<form className={classes.root} autoComplete='off'>
 			<FormControl variant='outlined' className={classes.formControl}>
-				<InputLabel ref={inputLabel} htmlFor='outlined-age-simple'>
+				<InputLabel ref={inputLabel} htmlFor='outlined-age-simple' >
 					{props.title}
 				</InputLabel>
 				<Select

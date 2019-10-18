@@ -1,0 +1,22 @@
+.searchBar{
+    display: flex;
+    flex-direction: row;
+    color: #fff;
+    margin-top:5px;
+    margin-right:10px;
+    border-radius: 25px;
+    border: 2px solid #fff;
+    padding: 10px;
+    width: 21%;
+    height:80%;
+    .label{
+        border-left:2px solid white;
+        padding-left: 15px;
+        padding-top: 5px;
+    }
+  }
+
+
+.searchBar:hover{
+    background-color: rgba($color: #fff, $alpha: 0.1);
+}

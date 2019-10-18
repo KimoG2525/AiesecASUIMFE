@@ -5,7 +5,8 @@ import {
 } from '../../../../global/types/dashboardTypes';
 import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
-export const getAllEnablers = token => {
+export const getAllEnablers = pageNum => {
+	var token = 'djfh'
 	return dispatch => {
 		dispatch(getAllEnablersPending());
 		const AuthStr = 'Bearer '.concat(token);

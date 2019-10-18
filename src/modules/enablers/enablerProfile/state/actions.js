@@ -5,7 +5,8 @@ import {
 } from '../../../../global/types/enablerProfileTypes';
 import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
-export const getEnabler = (id, token) => {
+export const getEnabler = (id) => {
+	const token ='dfhdufh'
 	return dispatch => {
 		dispatch(enablerPending());
 		const AuthStr = 'Bearer '.concat(token);
