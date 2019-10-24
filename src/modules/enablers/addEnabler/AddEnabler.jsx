@@ -4,12 +4,21 @@ import './style.scss'
 import { TextField } from '@material-ui/core';
 import { Button } from 'react-bootstrap';
 import ImageUploader from 'react-images-upload';
+import ColorPicker from '../../sideComponents/colorPicker'
+import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
+import Person from '@material-ui/icons/Person'
 const AddEnabler = () => {
 const [logo,setLogo] = useState('')
+const [backColor,setBackColor] = useState('#52bdf1')
 
 const onDrop = (picture) => {
     setLogo(picture)
     console.log(logo)
+}
+
+const handleColorChange = (color) => {
+	console.log(color)
+  setBackColor(color.hex)
 }
     return(
     <div className="main-container">
@@ -22,20 +31,14 @@ const onDrop = (picture) => {
         <div className="enabler-body">
         <div className="container">
             <div className="images">
-            <div className="logo">
-            <ImageUploader
-                withIcon={false}
-                buttonText='Add Logo'
-                onChange={onDrop}
-                imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                maxFileSize={5242880}
-                label=""
-                singleImage={true}
-                withPreview={true}
-            />
+            <div className="logo" style={{backgroundColor:`${backColor}`}}>			
+           <div className = "image-container">
+		   <Person style={{color:'#fff',fontSize:'100px',marginTop:'20px'}}/>
+		   </div>
+		   <Button style={{height:'25%',backgroundColor:'transparent',marginTop:'115px',borderColor:'transparent'}}  ><AddCircleOutline style={{color:'#fff',fontSize:'30px'}}/> </Button>
             </div>
             <div className="colorPicker">
-
+			<ColorPicker handleColorChange={handleColorChange} />
             </div>
             <div className="profile">
 			<TextField

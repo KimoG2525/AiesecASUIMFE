@@ -15,6 +15,7 @@
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
+    "react-color": "^2.17.3",
     "react-dom": "^16.9.0",
     "react-flip-move": "^3.0.3",
     "react-images-upload": "^1.2.7",
