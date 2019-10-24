@@ -43,8 +43,8 @@ const Home = props => {
 		}
 		if (props.loginSuccess) {
 			if (props.hasCompletedRegisteration)
-				props.history.push('/completeregisteration');
-			else props.history.push('/completeregisteration');
+				props.history.push('/dashboard');
+			else props.history.push('/dashboard');
 		}
 	}, [props]);
 

@@ -4,12 +4,13 @@ import WalkImg from "../../assets/images/walkAlone.png"
 
 const Card = ({enabler,big,history}) => {
 
-
+  console.log(enabler)
 
   const onClickRouter = () => {
     if(!big)
-    history.push(`/enablerProfile/${enabler.id}`)
+    history.push(`/enablerprofile/${enabler.id}`)
   }
+
   return(
     <div className={(big)?'bigCard':'card'}>
     <div className='container' onClick={onClickRouter}> 

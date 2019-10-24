@@ -5,13 +5,12 @@ import {
 } from '../../../../global/types/enablerProfileTypes';
 import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
-export const getEnabler = (id) => {
-	const token ='dfhdufh'
+export const getEnabler = (id,token) => {
 	return dispatch => {
 		dispatch(enablerPending());
 		const AuthStr = 'Bearer '.concat(token);
 		axios
-			.get(URL + '/Enabler/GetEnabler', id, {
+			.get(URL + `/Enabler/GetEnabler?id=${id}`,{
 				headers: { Authorization: AuthStr }
 			})
 			.then(response => {

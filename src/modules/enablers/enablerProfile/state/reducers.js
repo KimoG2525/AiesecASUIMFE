@@ -18,11 +18,12 @@ const enablerState = {
 };
 
 const getEnablerReducer = (state = enablerState, action) => {
+	console.log(action.type)
 	switch (action.type) {
 		case GET_ENABLER_SUCCEDED:
 			return {
-				...state,
-				...action.enabler,
+			    ...state,
+				enablerState:action.enabler,
 				getEnablerStatus: true,
 				getEnablerPending: false
 			};

@@ -4,35 +4,51 @@ import NavBar from '../../sideComponents/navBar'
 import ComboBox from '../../sideComponents/comboBoxDashboard'
 import { connect } from 'react-redux';
 import {getAllEnablers} from './state/actions'
-import "./style.scss"
+import ReactPaginate from 'react-paginate';
+import "../dashboard/style.scss"
 import { Button } from 'semantic-ui-react';
+import Paging from '../../sideComponents/paging'
+
 
 const Dashboard = (props) => {
-    const [pageNum,setPageNum] = useState(1)
+    const [pageNum,setPageNum] = useState(0)
     const convert = (enabler) =>{
-
-  return      {
-name: enabler.data.name,
-base64Logo: enabler.data.base64Logo,
-responsibleName:enabler.data.responsibleName,
-responsiblePhone:enabler.data.responsiblePhone,
-        }
+        console.log(enabler)
+const myEnabler =  {
+    name: enabler.name,
+    base64Logo: enabler.base64Logo,
+    responsibleName:enabler.responsibleName,
+    responsiblePhone:enabler.responsiblePhone,
+    id:enabler.id
+            }
+  return myEnabler     
 
     }
     useEffect(() => {
-	  props.getAllEnablers(pageNum)
-    });
+	 props.getAllEnablers(pageNum,props.token)
+    },[]);
 
-    useEffect(() => {
-        props.getAllEnablers(pageNum)
-      },[props,pageNum]);
+    // useEffect(() => {
+    //     props.getAllEnablers(pageNum,props.token)
+    //   },[props,pageNum]);
     
     const BodyRender= () =>{
-        if(props.enablers.length){
+        if(props.enablers.length!=0){
             return(
-                props.enablers.map((enabler,index) => 
-                     <Card enabler={()=>convert(enabler)} key={index} big={false} history={props.history}/>
+                <div className="body-render"> 
+                <div className="content">
+                <div className="dashboard-body"> 
+                    {
+                props.enablers.data.map((enabler,index) => 
+                     <Card enabler={convert(enabler)} key={index} big={false} history={props.history}/>
                   )
+                    }
+                </div>
+                </div>
+                <div className="paging-style">
+                <Paging />
+                </div>      
+                     </div>
                       )
         }
         else{
@@ -45,7 +61,7 @@ responsiblePhone:enabler.data.responsiblePhone,
 
     return(
         <div className="main-container" >
-          <NavBar/>
+                <NavBar search={true}/>  
           <div className="header">
         <div className="head-label">
         <h1>Enablers</h1>
@@ -69,14 +85,11 @@ responsiblePhone:enabler.data.responsiblePhone,
 										/>
         </div>
         </div>
-          <div className="content">
-         
-      
-
-            <div className="body"> 
+       
+          
             <BodyRender />
-            </div>
-        </div>
+
+   
         </div>
     )
 }
@@ -84,12 +97,13 @@ responsiblePhone:enabler.data.responsiblePhone,
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getAllEnablers: pageNum => dispatch(getAllEnablers(pageNum))
+		getAllEnablers: (pageNum,token) => dispatch(getAllEnablers(pageNum,token))
 	};
 };
 const mapStateToProps = state => {
 	return {
-		enablers: state.dashboard.allEnablers
+        enablers: state.dashboard.allEnablers,
+        token: state.login.token
 	};
 };
 export default connect(

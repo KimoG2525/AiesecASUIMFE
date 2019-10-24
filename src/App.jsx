@@ -6,6 +6,7 @@ import Login from './modules/auth/login/Login';
 import CompleteRegisteration from './modules/auth/completeRegisteration/CompleteRegisteration';
 import Dashboard from './modules/enablers/dashboard/Dashboard'
 import EnablerProfile from './modules/enablers/enablerProfile/EnablerProfile'
+import AddEnabler from './modules/enablers/addEnabler/AddEnabler'
 import { connect } from 'react-redux';
 const App = props => {
 	return (
@@ -24,6 +25,10 @@ const App = props => {
 				<Route
 					path='/enablerprofile/:id'
 					component={EnablerProfile}
+				/>
+					<Route
+					path='/addenabler'
+					component={AddEnabler}
 				/>
 
 
