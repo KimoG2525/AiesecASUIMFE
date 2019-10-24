@@ -24,6 +24,11 @@ const myEnabler =  {
   return myEnabler     
 
     }
+
+const paginate = (pageNum) => {
+   setPageNum(pageNum)
+}
+
     useEffect(() => {
 	 props.getAllEnablers(pageNum,props.token)
     },[]);
@@ -46,7 +51,7 @@ const myEnabler =  {
                 </div>
                 </div>
                 <div className="paging-style">
-                <Paging />
+                 <Paging totalPages={13} paginate={paginate}/>
                 </div>      
                      </div>
                       )
