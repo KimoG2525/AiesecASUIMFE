@@ -7,19 +7,58 @@ import ImageUploader from 'react-images-upload';
 import ColorPicker from '../../sideComponents/colorPicker'
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Person from '@material-ui/icons/Person'
-const AddEnabler = () => {
+const AddEnabler = (props) => {
 const [logo,setLogo] = useState('')
 const [backColor,setBackColor] = useState('#52bdf1')
+const [show,setShow] =useState(false)
+let fileInput = null
 
 const onDrop = (picture) => {
     setLogo(picture)
-    console.log(logo)
+    console.log(picture)
 }
 
 const handleColorChange = (color) => {
 	console.log(color)
   setBackColor(color.hex)
 }
+
+const showColor = ()=> {
+	setShow(true)
+}
+
+const handleClose = () => {
+	setShow(false)
+}
+
+const popover = {
+	position: 'absolute',
+	zIndex: '2',
+  }
+  const cover = {
+	position: 'fixed',
+	top: '0px',
+	right: '0px',
+	bottom: '0px',
+	left: '0px',
+  }
+
+const RenderImage = () =>{
+	if(logo)
+	{
+		return(
+			<img src={logo} alt="logo" style={{ maxWidth: '140px',maxHeight: '140px'}}/>
+			)
+	}
+	else{
+		return(
+			<Person style={{color:'#fff',fontSize:'120px',marginTop:'20px',marginLeft:'10px'}}/>
+				)
+	}
+
+}
+
+
     return(
     <div className="main-container">
           <NavBar search={false}/>
@@ -33,12 +72,22 @@ const handleColorChange = (color) => {
             <div className="images">
             <div className="logo" style={{backgroundColor:`${backColor}`}}>			
            <div className = "image-container">
-		   <Person style={{color:'#fff',fontSize:'100px',marginTop:'20px'}}/>
+		   <RenderImage />
 		   </div>
-		   <Button style={{height:'25%',backgroundColor:'transparent',marginTop:'115px',borderColor:'transparent'}}  ><AddCircleOutline style={{color:'#fff',fontSize:'30px'}}/> </Button>
+		   <input
+			type="file" style={{display:'none'}}
+			 onChange={ (e) => onDrop(URL.createObjectURL(e.target.files[0])) }
+			 ref={input => fileInput = input} />
+		   <Button onClick={()=>fileInput.click()} style={{height:'25%',backgroundColor:'transparent',marginTop:'150px',borderColor:'transparent'}}  >
+			   <AddCircleOutline style={{color:'#fff',fontSize:'30px'}}/> 
+		   </Button>
             </div>
             <div className="colorPicker">
-			<ColorPicker handleColorChange={handleColorChange} />
+			<Button onClick={ showColor }>Pick Color</Button>
+        { show ? <div style={ popover }>
+          <div style={ cover } onClick={ handleClose }/>
+		  <ColorPicker handleColorChange={handleColorChange} />
+        </div> : null }
             </div>
             <div className="profile">
 			<TextField
