@@ -44,10 +44,9 @@
           .images{
             display: flex;
             flex-direction: column;
-       
             width:30%;
             .logo{
-                height:45%;
+                height:47%;
                 width:70%;
                 align-self: center;
                 display: flex;
@@ -85,8 +84,9 @@
                     font-weight: 900;
                     margin-top: 10px;
                     width: 86%;
+                    color: #52bdf1;
                     margin-left:55px;
-                    border-bottom: 2px solid black;
+                    border-bottom: 2px solid #52bdf1;
                 }
             }
             .data{
