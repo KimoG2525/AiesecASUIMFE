@@ -4,7 +4,9 @@ import {
 	REGISTER_SUCCESS
 } from '../../../../global/types/registerTypes';
 const registerInitalState = {
-	registerPending: false
+	registerPending: false,
+	registerSucceded: false,
+	registerFailed: false
 };
 const partialRegisterReducer = (state = registerInitalState, action) => {
 	switch (action.type) {
@@ -16,12 +18,16 @@ const partialRegisterReducer = (state = registerInitalState, action) => {
 		case REGISTER_SUCCESS:
 			return {
 				...state,
-				registerPending: false
+				registerPending: false,
+				registerSucceded: true,
+				registerFailed: false
 			};
 		case REGISTER_FAILURE:
 			return {
 				...state,
 				registerPending: false,
+				registerSucceded: false,
+				registerFailed: true,
 				error: action.error
 			};
 		default:

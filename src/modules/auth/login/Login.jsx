@@ -19,12 +19,10 @@ const Home = props => {
 		password: '',
 		rememberMe: false
 	});
-	const [error, setError] = useState({ email: false, password: false });
 	const popUpRef = useRef();
-
+	// this function validates the user credentials and call the endpoint to log the user into the website
 	const onSubmit = () => {
 		if (validatePassword(user.password) && validateEmail(user.email)) {
-			setError({ ...error, email: false, password: false });
 			props.login(user);
 			setUser({
 				email: '',
@@ -34,17 +32,16 @@ const Home = props => {
 			return;
 		} else {
 			popUpRef.current.handleClickOpen();
-			setError({ ...error, email: true, password: true });
 		}
 	};
+	// listening to the login form actions if login succeded or failed
 	useEffect(() => {
 		if (props.loginFailed) {
 			popUpRef.current.handleClickOpen();
 		}
 		if (props.loginSuccess) {
-			if (props.hasCompletedRegisteration)
-				props.history.push('/dashboard');
-			else props.history.push('/dashboard');
+			if (props.hasCompletedRegisteration) props.history.push('/dashboard');
+			else props.history.push('/completeregisteration');
 		}
 	}, [props]);
 
@@ -72,7 +69,6 @@ const Home = props => {
 								<div className='homeForm'>
 									<div className='form-group'>
 										<TextField
-											error={error.email}
 											required
 											onChange={handleChange}
 											id='outlined-email-input'
@@ -88,7 +84,6 @@ const Home = props => {
 									<div className='form-group'>
 										<TextField
 											required
-											error={error.password}
 											onChange={handleChange}
 											id='outlined-password-input'
 											name='password'
@@ -127,15 +122,16 @@ const Home = props => {
 		</div>
 	);
 };
+// mapping the login action from the store to the form
 const mapDispatchToProps = dispatch => {
 	return {
 		login: user => dispatch(login(user))
 	};
 };
+// mapping the form status to render correctly after logging in and to check if there are errors while logging in
 const mapStateToProps = state => {
 	return {
 		loginFailed: state.login.loginFailed,
-		token: state.login.token,
 		loginSuccess: state.login.loginSuccess,
 		hasCompletedRegisteration: state.login.hasCompletedRegisteration
 	};

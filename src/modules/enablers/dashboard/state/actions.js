@@ -5,10 +5,11 @@ import {
 } from '../../../../global/types/dashboardTypes';
 import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
-export const getAllEnablers = (pageNum,token) => {
+import { getToken } from '../../../../global/functions/tokenManager';
+export const getAllEnablers = pageNum => {
 	return dispatch => {
 		dispatch(getAllEnablersPending());
-		const AuthStr = 'Bearer '.concat(token);
+		const AuthStr = 'Bearer '.concat(getToken());
 		axios
 			.get(URL + '/Enabler/GetAllEnablers?pageIndex=0&perPage=50', {
 				headers: { Authorization: AuthStr }
