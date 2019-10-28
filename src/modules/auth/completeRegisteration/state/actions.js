@@ -3,30 +3,30 @@ import {
 	LOGOUT_FAILED,
 	LOGOUT_SUCCESS
 } from '../../../../global/types/logoutTypes';
-
 import axios from 'axios';
 import { URL } from './../../../../global/API_URL';
-
-export const logout = token => {
+import { getToken, setToken } from '../../../../global/functions/tokenManager';
+export const logout = () => {
 	return dispatch => {
-		console.log(token);
-		const AuthStr = 'Bearer '.concat(token);
+		// This is the Authorization for back-end
+		const AuthStr = 'Bearer '.concat(getToken());
 		axios
 			.post(URL + '/Account/Logout', null, {
 				headers: { Authorization: AuthStr }
 			})
 			.then(response => {
+				// clearing the cached token when logging out and dispatching the action to the store
+				setToken('');
 				dispatch(logoutAction());
 			})
 			.catch(err => {
 				dispatch(logoutFailure(err));
-				console.log(err);
 			});
 	};
 };
-export const save = (userData, token) => {
+export const save = userData => {
 	return dispatch => {
-		const AuthStr = 'Bearer '.concat(token);
+		const AuthStr = 'Bearer '.concat(getToken());
 		axios
 			.get(URL + '/Account', {
 				headers: { Authorization: AuthStr }
@@ -40,6 +40,7 @@ export const save = (userData, token) => {
 					mobileNumber: userData.mobileNumber,
 					birthDate: userData.birthDate
 				};
+				// we are using axios.all here because we need to call multiple endpoints at same time for one result that is saving the data
 				axios
 					.all([
 						axios.put(URL + '/Account/Update', user, {
@@ -60,12 +61,10 @@ export const save = (userData, token) => {
 						dispatch(dataSaved);
 					})
 					.catch(err => {
-						console.log(err);
 						dispatch(dataSavedFailed);
 					});
 			})
 			.catch(err => {
-				console.log(err);
 				dispatch(dataSavedFailed);
 			});
 	};
