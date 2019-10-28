@@ -7,8 +7,7 @@ import ImageUploader from 'react-images-upload';
 import ColorPicker from '../../sideComponents/colorPicker'
 import AddCircleOutline from '@material-ui/icons/AddCircleOutline'
 import Person from '@material-ui/icons/Person'
-import imageCompression from 'browser-image-compression';
-const image2base64 = require('image-to-base64')
+import {imageCompress} from '../../../global/functions/imageProcessing'
 const AddEnabler = (props) => {
 const [logo,setLogo] = useState('')
 const [logoBase64,setLogoBase64] = useState('')
@@ -17,51 +16,12 @@ const [show,setShow] =useState(false)
 let fileInput = null
 
 const onDrop = (picture) => {
+	if(picture){
 	setLogo(URL.createObjectURL(picture))
 	imageCompress(picture)
-}
-
-const imageCompress = (picture) => {
- 
-	var imageFile = picture;
-	console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
-	console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-   
-	var options = {
-	  maxSizeMB: 1,
-	  maxWidthOrHeight: 1920,
-	  minWidthAndHeight: 130,
-	  useWebWorker: true
 	}
-	imageCompression(imageFile, options)
-	  .then(function (compressedFile) {
-		console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-		console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
-   
-
-		imageEncoder(URL.createObjectURL(imageFile))
-	  })
-	  .catch(function (error) {
-		console.log(error.message);
-	  });
-  }
-
-
-const imageEncoder = (picture) => 
-{
-    image2base64(picture) // you can also to use url
-    .then(
-        (response) => {
-			console.log(response); //cGF0aC90by9maWxlLmpwZw==
-			setLogoBase64(response)
-        }
-    )
-    .catch(
-        (error) => {
-            console.log(error); //Exepection error....
-        }
-    )
 }
+
 
 const handleColorChange = (color) => {
 	console.log(color)
@@ -143,7 +103,7 @@ const RenderImage = () =>{
         // value={values.multiline}
         // onChange={handleChange('multiline')}
 		// className={classes.textField}
-		style={{borderRadius:'6px',border:'2px solid #000',width:'70%',backgroundColor:'#fff',padding:'-5px'}}
+		style={{borderRadius:'6px',width:'70%',backgroundColor:'#fff',padding:'-5px'}}
         margin="normal"
         variant="outlined"
       />
