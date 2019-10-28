@@ -21,9 +21,11 @@ const Register = props => {
 		function: [],
 		position: []
 	});
+	//popup message when error occures
 	const [popupMessage, setPopupMessage] = useState('Invalid Data.');
 	const [emailError, setEmailError] = useState(false);
 	const popUpRef = useRef();
+	//gets all Available Functions and Positions in the Aiesec Domain and Spreads them into 2 Separate Arrays
 	const getData = () => {
 		Axios.all([
 			Axios.get(URL + '/Miscellaneous/Functions'),
@@ -34,6 +36,7 @@ const Register = props => {
 			})
 		);
 	};
+	// handle Register, validates data and call the backend to register if the data are valid
 	const handleClick = () => {
 		if (
 			validateEmail(user.email) &&
@@ -41,19 +44,30 @@ const Register = props => {
 			(user.function >= 0 && user.function < data.function.length)
 		) {
 			setEmailError(false);
+			//after validating the user input we register the user to the backend
 			props.register(user);
 			return;
 		}
+		// if the data not valid then we display popup message with error
 		popUpRef.current.handleClickOpen();
 		setEmailError(true);
 	};
+	//listening to the form status for errors or success registration
 	useEffect(() => {
 		if (props.error === 409) {
 			setPopupMessage('Email already exists.');
 			popUpRef.current.handleClickOpen();
 			setEmailError(true);
 		}
-	}, [props.error]);
+		if (props.success) {
+			setPopupMessage('User Registered Successfully');
+			popUpRef.current.handleClickOpen();
+			setEmailError(false);
+			setUser({ ...user, email: '', function: -1, position: -1 });
+		}
+	}, [props, user]);
+
+	// handling change for input fields
 	const handleChange = event => {
 		if (event.target.name === 'email') {
 			setUser({ ...user, email: event.target.value });
@@ -73,6 +87,7 @@ const Register = props => {
 			[event.target.name]: -1
 		});
 	};
+	// getting the functions and positions when the component first mounts
 	useEffect(() => getData(), []);
 	return (
 		<div className='registerhome'>
@@ -143,14 +158,17 @@ const Register = props => {
 		</div>
 	);
 };
+// mapping the register action from the store to the form
 const mapDispatchToProps = dispatch => {
 	return {
 		register: userName => dispatch(register(userName))
 	};
 };
+// mapping the form status from the redux store
 const mapStateToProps = state => {
 	return {
-		error: state.register.error
+		error: state.register.error,
+		success: state.register.registerSucceded
 	};
 };
 export default connect(

@@ -10,6 +10,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import DatePickers from '../../sideComponents/datePicker';
 import PopUp from '../../sideComponents/popUp';
 const Form = props => {
+	//userData To send to Back-End
 	const [userData, setUserData] = useState({
 		firstName: '',
 		lastName: '',
@@ -20,33 +21,34 @@ const Form = props => {
 		newPassword: '',
 		repeatedPassword: ''
 	});
+	//Message to display in popup
 	const [popupMessage, setpopupMessage] = useState('');
 	const popUpRef = useRef();
+	//handling change dynamicly depending on event name
 	const handleChange = event => {
 		setUserData({ ...userData, [event.target.name]: event.target.value });
 	};
+	//Phone Component change action
 	const handlePhoneChange = value => {
 		setUserData({ ...userData, mobileNumber: value });
 	};
+	//Date Component change action
 	const handleDateChange = value => {
 		setUserData({ ...userData, birthDate: value });
 	};
+	//if Valid Data Send To Api if not show error message
 	const onSubmit = event => {
 		event.preventDefault();
-		//validate data
 		if (validateUser(userData)) {
-			//call api
-			props.save(userData, props.token);
-			//redirect to dashboard page
-			//props.history.push('/dashboard')
+			props.save(userData);
 		} else {
 			setpopupMessage('Save Failed, Please Fill Out All The Fields Correctly.');
 			popUpRef.current.handleClickOpen();
 		}
 	};
+	//Listening To Form Actions
 	useEffect(() => {
 		if (props.formStatus.saveSuccess) {
-			//redirect to dashboard
 			props.history.push('/dashboard');
 		}
 		if (props.formStatus.saveFailed) {
@@ -54,7 +56,6 @@ const Form = props => {
 			popUpRef.current.handleClickOpen();
 		}
 		if (props.formStatus.logoutSuccess) {
-			//redirect to login page
 			props.history.push('/');
 		}
 		if (props.formStatus.logoutFailed) {
@@ -202,7 +203,7 @@ const Form = props => {
 					Save
 				</Button>
 				<Button
-					onClick={e => props.logout(props.token)}
+					onClick={e => props.logout()}
 					variant='primary'
 					style={{
 						width: '100px',
@@ -222,16 +223,17 @@ const Form = props => {
 		</div>
 	);
 };
+//mapping logout and save data actions to the form from Redux
 const mapDispatchToProps = dispatch => {
 	return {
-		logout: token => dispatch(logout(token)),
-		save: (userData, token) => dispatch(save(userData, token))
+		logout: () => dispatch(logout()),
+		save: userData => dispatch(save(userData))
 	};
 };
+// mapping the form status from Redux Reducer to check if saved Successfully / logged out or save failed
 const mapStateToProps = state => {
 	return {
-		token: state.login.token,
-		formStatus: state.partialRegister
+		formStatus: state.register
 	};
 };
 export default connect(

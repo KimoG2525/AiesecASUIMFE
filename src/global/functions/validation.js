@@ -1,4 +1,5 @@
 // change validation to use email checker then add our domain checker
+import { getToken } from './tokenManager';
 import { validate } from 'email-validator';
 export const validateEmail = email => {
 	if (validate(email) && email.split('@')[1].toLowerCase() === 'aiesec.net') {
@@ -36,6 +37,12 @@ export const validateUser = userData => {
 		userData.oldPassword !== userData.newPassword &&
 		userData.oldPassword.length >= 8
 	) {
+		return true;
+	}
+	return false;
+};
+export const isLoggedIn = () => {
+	if (getToken().length) {
 		return true;
 	}
 	return false;

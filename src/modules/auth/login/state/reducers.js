@@ -1,14 +1,13 @@
 import {
 	LOGIN_FAILURE,
-	LOGIN_PENDING,
-	LOGIN_SUCCESS
+	LOGIN_SUCCESS,
+	LOGIN_PENDING
 } from '../../../../global/types/loginTypes';
 import { LOGOUT_SUCCESS } from '../../../../global/types/logoutTypes';
+
 const userSession = {
-	token: '',
-	expiresIn: 0,
 	hasCompletedRegisteration: false,
-	loadingLogin: false,
+	userRole: '',
 	loginSuccess: false,
 	loginFailed: false
 };
@@ -18,14 +17,14 @@ const loginReducer = (state = userSession, action) => {
 		case LOGIN_PENDING:
 			return {
 				...state,
-				loadingLogin: true
+				loginFailed: false,
+				loginSuccess: false
 			};
 		case LOGIN_SUCCESS:
 			return {
 				...state,
-				token: action.data.token,
-				expiresIn: action.data.expiresIn,
 				hasCompletedRegisteration: action.data.hasCompletedRegisteration,
+				userRole: action.data.userRole,
 				loadingLogin: false,
 				loginSuccess: true,
 				loginFailed: false
@@ -39,8 +38,6 @@ const loginReducer = (state = userSession, action) => {
 		case LOGOUT_SUCCESS:
 			return {
 				...state,
-				token: '',
-				expiresIn: 0,
 				hasCompletedRegisteration: false,
 				loginSuccess: false
 			};

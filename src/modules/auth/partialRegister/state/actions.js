@@ -5,11 +5,15 @@ import {
 } from '../../../../global/types/registerTypes';
 import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
+import { getToken } from '../../../../global/functions/tokenManager';
 export const register = user => {
 	return dispatch => {
 		dispatch(registerPending());
+		const AuthStr = 'Bearer '.concat(getToken());
 		axios
-			.post(URL + '/Account/PartialRegister', user)
+			.post(URL + '/Account/PartialRegister', user, {
+				headers: { Authorization: AuthStr }
+			})
 			.then(response => {
 				dispatch(registerSuccess());
 			})
