@@ -5,17 +5,34 @@ import Button from '@material-ui/core/Button';
 import SearchBar from './searchBar'
 import "./styling/navBarStyle.scss"
 
-const NavBar = () => {
+const NavBar = (props) => {
     const goToHome = () => {
 
     }
+    const RenderSearch = () => {
+        if(props.search){
+            return(
+                <div className="navBar">
+                <SearchBar />
+                <Button onClick={goToHome}  ><HomeRoundedIcon style={{color:'#fff',fontSize:'30px'}}/> </Button>
+                 <TemporaryDrawer />
+                 </div>
+            )
+        }
+        else{
+            return(
+                <div className="navBar">
+                <Button onClick={goToHome}  ><HomeRoundedIcon style={{color:'#fff',fontSize:'30px'}}/> </Button>
+                 <TemporaryDrawer />
+                 </div>
+            )
+        }
+    }
+
     return(
-        <div className="navBar">
-        <SearchBar />
-        <Button onClick={goToHome}  ><HomeRoundedIcon style={{color:'#fff',fontSize:'30px'}}/> </Button>
-         <TemporaryDrawer />
-         </div>
+        <RenderSearch />
     )
+   
 }
 
 export default NavBar

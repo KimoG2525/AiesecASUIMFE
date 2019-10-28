@@ -2,6 +2,8 @@
     height: 100vh;
     background-image: url('../../../assets/images/companies.jpg');
     background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
     .header{
         display: flex;
         flex-direction: row;
@@ -21,18 +23,27 @@
             font-size: 27px;
         }
     }
+    .body-render{
+        display: flex;
+        flex-direction: column;
+
+        .paging-style{
+            position: relative;
+            align-self: center;
+        }
+    }
     .content{
      overflow-y:auto;
      overflow-x:hidden;
-     height:41em;
+    height:36em;
+    // height:'90%';
      width:109.5em;
-    .body{
+    .dashboard-body{
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     flex-wrap: wrap;
     margin-bottom: 120px;
-
-   
     }
 }
     }

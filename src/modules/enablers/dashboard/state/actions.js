@@ -11,7 +11,7 @@ export const getAllEnablers = pageNum => {
 		dispatch(getAllEnablersPending());
 		const AuthStr = 'Bearer '.concat(getToken());
 		axios
-			.get(URL + '/Enabler/GetAllEnablers', null, {
+			.get(URL + '/Enabler/GetAllEnablers?pageIndex=0&perPage=50', {
 				headers: { Authorization: AuthStr }
 			})
 			.then(response => {

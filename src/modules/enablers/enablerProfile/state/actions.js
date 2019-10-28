@@ -11,7 +11,7 @@ export const getEnabler = id => {
 		dispatch(enablerPending());
 		const AuthStr = 'Bearer '.concat(getToken());
 		axios
-			.get(URL + '/Enabler/GetEnabler', id, {
+			.get(URL + `/Enabler/GetEnabler?id=${id}`,{
 				headers: { Authorization: AuthStr }
 			})
 			.then(response => {
