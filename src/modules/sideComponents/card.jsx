@@ -4,7 +4,7 @@ import WalkImg from "../../assets/images/walkAlone.png"
 
 const Card = ({enabler,big,history}) => {
 
-  console.log(enabler)
+  //console.log(enabler)
 
   const onClickRouter = () => {
     if(!big)

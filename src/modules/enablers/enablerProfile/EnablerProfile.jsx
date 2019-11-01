@@ -16,8 +16,8 @@ import {getEnabler} from './state/actions'
 const EnablerProfile = (props) => {
     const id = props.match.params.id;
     useEffect(() => {
-        props.getEnabler(id,props.token)
-        console.log(props.enabler)
+        props.getEnabler(id)
+        //console.log(props.enabler)
       },[]);
 
     const convert =(enabler) => {
@@ -32,7 +32,7 @@ const EnablerProfile = (props) => {
     }
 
     const BodyRender = () => {
-        console.log(props.enabler)
+        //console.log(props.enabler)
         if(props.enabler){
             return(
                 <div className="main-container" >
@@ -141,13 +141,12 @@ const EnablerProfile = (props) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getEnabler: (id,token) => dispatch(getEnabler(id,token))
+		getEnabler: (id) => dispatch(getEnabler(id))
 	};
 };
 const mapStateToProps = state => {
 	return {
-        enabler: state.enablerProfile.enablerState,
-        token: state.login.token
+        enabler: state.enablerProfile.enablerState
 	};
 };
 export default connect(

@@ -9,6 +9,10 @@ import Dashboard from './modules/enablers/dashboard/Dashboard'
 import EnablerProfile from './modules/enablers/enablerProfile/EnablerProfile'
 import AddEnabler from './modules/enablers/addEnabler/AddEnabler'
 import PublicRoute from './modules/sideComponents/PublicRoute';
+import {start} from './global/functions/axiosInterceptor'
+
+start()
+
 const App = props => {
 	return (
 		<Router>

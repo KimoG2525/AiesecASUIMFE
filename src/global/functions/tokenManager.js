@@ -1,3 +1,4 @@
+// TO BE DELETED , REPLACED BY AXIOSINTERCEPTOR
 import axios from 'axios';
 import { URL } from './../API_URL';
 export const setToken = token => {
@@ -20,9 +21,7 @@ export const clearToken = () => {
 export const refreshToken = () => {
 	const AuthStr = 'Bearer '.concat(getToken());
 	axios
-		.post(URL + '/Account/RefreshToken', null, {
-			headers: { Authorization: AuthStr }
-		})
+		.post('/Account/RefreshToken')
 		.then(response => {
 			setToken(response.data.token);
 			setTokenExpiryDate(response.data.expiresIn);

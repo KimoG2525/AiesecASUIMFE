@@ -13,7 +13,7 @@ import Paging from '../../sideComponents/paging'
 const Dashboard = (props) => {
     const [pageNum,setPageNum] = useState(0)
     const convert = (enabler) =>{
-        console.log(enabler)
+        //console.log(enabler)
 const myEnabler =  {
     name: enabler.name,
     base64Logo: enabler.base64Logo,
@@ -30,11 +30,11 @@ const paginate = (pageNum) => {
 }
 
     useEffect(() => {
-	 props.getAllEnablers(pageNum,props.token)
+	 props.getAllEnablers(pageNum)
     },[]);
 
     // useEffect(() => {
-    //     props.getAllEnablers(pageNum,props.token)
+    //     props.getAllEnablers(pageNum)
     //   },[props,pageNum]);
     
     const BodyRender= () =>{
@@ -102,13 +102,12 @@ const paginate = (pageNum) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getAllEnablers: (pageNum,token) => dispatch(getAllEnablers(pageNum,token))
+		getAllEnablers: (pageNum) => dispatch(getAllEnablers(pageNum))
 	};
 };
 const mapStateToProps = state => {
 	return {
-        enablers: state.dashboard.allEnablers,
-        token: state.login.token
+        enablers: state.dashboard.allEnablers
 	};
 };
 export default connect(

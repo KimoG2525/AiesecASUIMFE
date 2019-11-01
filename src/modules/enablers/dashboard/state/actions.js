@@ -3,17 +3,12 @@ import {
 	GET_ALL_ENABLERS_PENDING,
 	GET_ALL_ENABLERS_FAILED
 } from '../../../../global/types/dashboardTypes';
-import { URL } from '../../../../global/API_URL';
 import axios from 'axios';
-import { getToken } from '../../../../global/functions/tokenManager';
 export const getAllEnablers = pageNum => {
 	return dispatch => {
 		dispatch(getAllEnablersPending());
-		const AuthStr = 'Bearer '.concat(getToken());
 		axios
-			.get(URL + '/Enabler/GetAllEnablers?pageIndex=0&perPage=50', {
-				headers: { Authorization: AuthStr }
-			})
+			.get('/Enabler/GetAllEnablers?pageIndex=0&perPage=50')
 			.then(response => {
 				dispatch(getAllEnablersSuccess(response.data));
 			})

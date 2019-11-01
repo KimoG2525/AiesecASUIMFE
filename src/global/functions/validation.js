@@ -1,6 +1,6 @@
 // change validation to use email checker then add our domain checker
-import { getToken } from './tokenManager';
 import { validate } from 'email-validator';
+import LocalStorageService from "../functions/LocalStorageService";
 export const validateEmail = email => {
 	if (validate(email) && email.split('@')[1].toLowerCase() === 'aiesec.net') {
 		return true;
@@ -42,7 +42,9 @@ export const validateUser = userData => {
 	return false;
 };
 export const isLoggedIn = () => {
-	if (getToken().length) {
+	const localStorageService = LocalStorageService.getService();
+
+	if (localStorageService.getAccessToken()) {
 		return true;
 	}
 	return false;

@@ -4,19 +4,18 @@ import {
 	LOGOUT_SUCCESS
 } from '../../../../global/types/logoutTypes';
 import axios from 'axios';
-import { URL } from './../../../../global/API_URL';
-import { getToken, setToken } from '../../../../global/functions/tokenManager';
+import LocalStorageService from "../../../../global/functions/LocalStorageService";
+
+const localStorageService = LocalStorageService.getService();
+
 export const logout = () => {
 	return dispatch => {
 		// This is the Authorization for back-end
-		const AuthStr = 'Bearer '.concat(getToken());
 		axios
-			.post(URL + '/Account/Logout', null, {
-				headers: { Authorization: AuthStr }
-			})
+			.post('/Account/Logout')
 			.then(response => {
 				// clearing the cached token when logging out and dispatching the action to the store
-				setToken('');
+				localStorageService.setAccessToken('');
 				dispatch(logoutAction());
 			})
 			.catch(err => {
@@ -26,11 +25,8 @@ export const logout = () => {
 };
 export const save = userData => {
 	return dispatch => {
-		const AuthStr = 'Bearer '.concat(getToken());
 		axios
-			.get(URL + '/Account', {
-				headers: { Authorization: AuthStr }
-			})
+			.get('/Account')
 			.then(response => {
 				const user = {
 					email: response.data.email,
@@ -43,17 +39,12 @@ export const save = userData => {
 				// we are using axios.all here because we need to call multiple endpoints at same time for one result that is saving the data
 				axios
 					.all([
-						axios.put(URL + '/Account/Update', user, {
-							headers: { Authorization: AuthStr }
-						}),
+						axios.put('/Account/Update', user),
 						axios.put(
-							URL + '/Account/ChangePassword',
+							'/Account/ChangePassword',
 							{
 								oldPassword: userData.oldPassword,
 								newPassword: userData.newPassword
-							},
-							{
-								headers: { Authorization: AuthStr }
 							}
 						)
 					])

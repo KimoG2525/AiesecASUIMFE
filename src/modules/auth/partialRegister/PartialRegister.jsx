@@ -28,8 +28,8 @@ const Register = props => {
 	//gets all Available Functions and Positions in the Aiesec Domain and Spreads them into 2 Separate Arrays
 	const getData = () => {
 		Axios.all([
-			Axios.get(URL + '/Miscellaneous/Functions'),
-			Axios.get(URL + '/Miscellaneous/Positions')
+			Axios.get('/Miscellaneous/Functions'),
+			Axios.get('/Miscellaneous/Positions')
 		]).then(
 			Axios.spread((func, pos) => {
 				setData({ function: func.data, position: pos.data });
