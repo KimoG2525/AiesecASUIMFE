@@ -3,11 +3,7 @@ import {
 	LOGIN_SUCCESS
 } from '../../../../global/types/loginTypes';
 import axios from 'axios';
-import { URL } from './../../../../global/API_URL';
-import LocalStorageService from "../../../../global/functions/LocalStorageService";
 import { LOGIN_PENDING } from './../../../../global/types/loginTypes';
-
-const localStorageService = LocalStorageService.getService();
 
 export const login = user => {
 	return dispatch => {

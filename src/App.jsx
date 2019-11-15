@@ -5,13 +5,13 @@ import PrivateRoute from './modules/sideComponents/PrivateRoute';
 import PartialRegister from './modules/auth/partialRegister/PartialRegister.jsx';
 import Login from './modules/auth/login/Login';
 import CompleteRegisteration from './modules/auth/completeRegisteration/CompleteRegisteration';
-import Dashboard from './modules/enablers/dashboard/Dashboard'
-import EnablerProfile from './modules/enablers/enablerProfile/EnablerProfile'
-import AddEnabler from './modules/enablers/addEnabler/AddEnabler'
+import Dashboard from './modules/enablers/dashboard/Dashboard';
+import EnablerProfile from './modules/enablers/enablerProfile/EnablerProfile';
+import AddEnabler from './modules/enablers/addEnabler/AddEnabler';
 import PublicRoute from './modules/sideComponents/PublicRoute';
-import {start} from './global/functions/axiosInterceptor'
+import { start } from './global/functions/axiosInterceptor';
 
-start()
+start();
 
 const App = props => {
 	return (
@@ -26,6 +26,7 @@ const App = props => {
 					/>
 					<PrivateRoute path='/dashboard' component={Dashboard} />
 					<PrivateRoute path='/enablerprofile/:id' component={EnablerProfile} />
+					<PrivateRoute path='/addenabler' component={AddEnabler} />
 				</Switch>
 			</div>
 		</Router>

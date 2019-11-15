@@ -9,7 +9,6 @@ import { TextField } from '@material-ui/core';
 import { Button } from 'react-bootstrap';
 import { register } from './state/actions';
 import ComboBox from '../../sideComponents/comboBoxRegister';
-import { URL } from '../../../global/API_URL';
 import Axios from 'axios';
 const Register = props => {
 	const [user, setUser] = useState({
@@ -40,8 +39,10 @@ const Register = props => {
 	const handleClick = () => {
 		if (
 			validateEmail(user.email) &&
-			(user.position >= 0 && user.position < data.position.length) &&
-			(user.function >= 0 && user.function < data.function.length)
+			user.position >= 0 &&
+			user.position < data.position.length &&
+			user.function >= 0 &&
+			user.function < data.function.length
 		) {
 			setEmailError(false);
 			//after validating the user input we register the user to the backend
@@ -171,7 +172,4 @@ const mapStateToProps = state => {
 		success: state.register.registerSucceded
 	};
 };
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

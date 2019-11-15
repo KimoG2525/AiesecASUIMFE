@@ -7,60 +7,108 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
-
+import AddIcon from '@material-ui/icons/Add';
+import PersonIcon from '@material-ui/icons/Person';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import CreateIcon from '@material-ui/icons/Create';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logout } from '../auth/completeRegisteration/state/actions';
 const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
+	list: {
+		width: 250
+	},
+	fullList: {
+		width: 'auto'
+	}
 });
 
-export default function TemporaryDrawer() {
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+const TemporaryDrawer = props => {
+	const classes = useStyles();
+	const [state, setState] = React.useState({
+		top: false,
+		left: false,
+		bottom: false,
+		right: false
+	});
 
-  const toggleDrawer = (side, open) => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
+	const toggleDrawer = (side, open) => event => {
+		if (
+			event.type === 'keydown' &&
+			(event.key === 'Tab' || event.key === 'Shift')
+		) {
+			return;
+		}
+		setState({ ...state, [side]: open });
+	};
+	const redirect = obj => {
+		if (obj.action)
+			obj.action(() => {
+				props.history.push(obj.route);
+			});
+		else {
+			props.history.push(obj.route);
+		}
+	};
+	const sideList = side => (
+		<div
+			className={classes.list}
+			role='presentation'
+			onClick={toggleDrawer(side, false)}
+			onKeyDown={toggleDrawer(side, false)}>
+			<List>
+				{[
+					{ text: 'Enablers', icon: <DashboardIcon />, route: '/dashboard' },
+					{ text: 'Profile', icon: <PersonIcon />, route: '/profile' },
+					{
+						text: 'Register New Aiesecer',
+						icon: <AddIcon />,
+						route: '/partialregister'
+					},
+					{
+						text: 'Create New Enabler',
+						icon: <CreateIcon />,
+						route: '/addenabler'
+					},
+					{
+						text: 'Sign Out',
+						icon: <ExitToAppIcon />,
+						route: '/',
+						action: cb => {
+							props.logout(cb);
+						}
+					}
+				].map((obj, index) => (
+					<ListItem button onClick={() => redirect(obj)} key={index}>
+						<ListItemIcon>{obj.icon}</ListItemIcon>
+						<ListItemText primary={obj.text} />
+					</ListItem>
+				))}
+			</List>
+		</div>
+	);
 
-    setState({ ...state, [side]: open });
-  };
-
-  const sideList = side => (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(side, false)}
-      onKeyDown={toggleDrawer(side, false)}
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-
-  return (
-    <div>
-      <Button onClick={toggleDrawer('right', true)} ><MenuRoundedIcon style={{color:'#fff',fontSize:'30px',height:'47px'}}/></Button>
-      <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)}>
-        {sideList('right')}
-      </Drawer>
-    </div>
-  );
-}
+	return (
+		<div>
+			<Button onClick={toggleDrawer('right', true)}>
+				<MenuRoundedIcon
+					style={{ color: '#fff', fontSize: '30px', height: '47px' }}
+				/>
+			</Button>
+			<Drawer
+				anchor='right'
+				open={state.right}
+				onClose={toggleDrawer('right', false)}>
+				{sideList('right')}
+			</Drawer>
+		</div>
+	);
+};
+const mapDispatchToProps = dispatch => {
+	return {
+		logout: cb => dispatch(logout(cb))
+	};
+};
+export default withRouter(connect(null, mapDispatchToProps)(TemporaryDrawer));

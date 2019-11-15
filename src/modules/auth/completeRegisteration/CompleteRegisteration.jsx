@@ -236,7 +236,4 @@ const mapStateToProps = state => {
 		formStatus: state.register
 	};
 };
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

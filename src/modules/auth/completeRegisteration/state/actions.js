@@ -4,7 +4,7 @@ import {
 	LOGOUT_SUCCESS
 } from '../../../../global/types/logoutTypes';
 import axios from 'axios';
-import LocalStorageService from "../../../../global/functions/LocalStorageService";
+import LocalStorageService from '../../../../global/functions/LocalStorageService';
 
 const localStorageService = LocalStorageService.getService();
 
@@ -40,13 +40,10 @@ export const save = userData => {
 				axios
 					.all([
 						axios.put('/Account/Update', user),
-						axios.put(
-							'/Account/ChangePassword',
-							{
-								oldPassword: userData.oldPassword,
-								newPassword: userData.newPassword
-							}
-						)
+						axios.put('/Account/ChangePassword', {
+							oldPassword: userData.oldPassword,
+							newPassword: userData.newPassword
+						})
 					])
 					.then(() => {
 						dispatch(dataSaved);
