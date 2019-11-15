@@ -1,7 +1,4 @@
-import {
-	LOGOUT_FAILED,
-	LOGOUT_SUCCESS
-} from '../types/logoutTypes';
+import { LOGOUT_FAILED, LOGOUT_SUCCESS } from '../types/logoutTypes';
 import axios from 'axios';
 export const logout = token => {
 	return dispatch => {
