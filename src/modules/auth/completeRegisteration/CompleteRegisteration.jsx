@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { validateUser } from '../../../global/functions/validation';
 import { save, logout } from './state/actions';
-import MuiPhoneNumber from 'material-ui-phone-number';
+import PhoneNumber from '../../sideComponents/phoneNumber'
 import DatePickers from '../../sideComponents/datePicker';
 import PopUp from '../../sideComponents/popUp';
 const Form = props => {
@@ -141,16 +141,7 @@ const Form = props => {
 											/>
 										</div>
 										<div className='form-group'>
-											<MuiPhoneNumber
-												required
-												variant='outlined'
-												className='phone-number'
-												defaultCountry={'eg'}
-												onChange={handlePhoneChange}
-												name='mobileNumber'
-												label='Phone Number'
-												style={{ width: '600px' }}
-											/>
+										<PhoneNumber handlePhoneChange={handlePhoneChange} width='240px' />
 										</div>
 									</div>
 
@@ -236,4 +227,7 @@ const mapStateToProps = state => {
 		formStatus: state.register
 	};
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Form);

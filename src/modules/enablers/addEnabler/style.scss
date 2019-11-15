@@ -18,7 +18,7 @@
     }
     .enabler-body {
         width: 93em;
-        height: 36em;
+        height: 37em;
         //min-height: 44em;
         display: flex;
         justify-content: center;
@@ -56,7 +56,7 @@
                     width: 140px;
                     height: 140px;
                     margin-left: 45px;
-                    margin-top: 25px;
+                    margin-top: 35px;
                     z-index: 99;
                 }
             }
@@ -105,7 +105,7 @@
                     flex-direction: column;
                     align-items: center;
                     .buttons{
-                        margin-top: 50px;
+                        margin-top: 20px;
                         margin-left: 70px;
                         height:10%;
                         display: flex;
