@@ -14,7 +14,7 @@
     "image-to-base64": "^2.0.1",
     "material-ui-phone-number": "^2.1.0",
     "material-ui-pickers": "^2.2.4",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.12",
     "react-color": "^2.17.3",
